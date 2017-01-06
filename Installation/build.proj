@@ -1,0 +1,22 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	
+	<Import Project="$(MSBuildProjectDirectory)\VCS Roots\Build Process\MSBuild Community Tasks\MSBuild.Community.Tasks.Targets"/>
+	
+	<!--########################################################################################
+		Build the installer
+	#########################################################################################-->
+	<Target Name="Build" DependsOnTargets="GetVersionNumber">					
+		<Exec Command="&quot;C:\Program Files (x86)\Inno Setup 5\ISCC.exe&quot; &quot;/dVERSION=$(VersionNumber)&quot; &quot;$(MSBuildProjectDirectory)\Installation Script.iss&quot;"/>
+	</Target>
+	
+	<!--########################################################################################
+		Generate the version number for this build
+	#########################################################################################-->
+	<Target Name="GetVersionNumber">
+
+		<!-- Read the base version number from the XML file -->
+		<XmlRead XPath="/Version" XmlFileName="$(MSBuildProjectDirectory)\Version.xml">
+			<Output TaskParameter="Value" PropertyName="VersionNumber" />
+		</XmlRead>		 
+	</Target>
+</Project>

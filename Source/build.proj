@@ -1,0 +1,53 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="RunUnitTests" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	
+	<Import Project="$(MSBuildProjectDirectory)\VCS Roots\Build Process\MSBuild Community Tasks\MSBuild.Community.Tasks.Targets"/>	
+	
+	<!--########################################################################################
+		Run the unit tests
+	#########################################################################################-->
+	<Target Name="RunUnitTests" DependsOnTargets="PrepareArtifacts;Build;GetVersionNumber">
+		<Exec Command="$(teamcity_dotnet_nunitlauncher) v4.0 x86 NUnit-2.6.2 $(MSBuildProjectDirectory)\SubtitleDownloaderPlugin.UnitTests\bin\$(Option_BuildConfiguration)\SubtitleDownloaderPlugin.UnitTests.dll"/>
+	</Target>
+	
+	<!--########################################################################################
+		Prepare the artifact files
+	#########################################################################################-->
+	<Target Name="PrepareArtifacts" DependsOnTargets="Build;GetVersionNumber">
+		<ItemGroup>						
+			<InstallerFiles Include="$(MSBuildProjectDirectory)\Dependencies\MediaInfo.dll" />
+		</ItemGroup>
+		
+		<Copy SourceFiles="@(InstallerFiles)" DestinationFiles="@(InstallerFiles->'$(MSBuildProjectDirectory)\SubtitleDownloaderPlugin\bin\$(Option_BuildConfiguration)\%(RecursiveDir)%(Filename)%(Extension)')" />
+	</Target>
+	
+	<!--########################################################################################
+		Build the solution
+	#########################################################################################-->
+	<Target Name="Build" DependsOnTargets="GetVersionNumber">
+		<PropertyGroup>
+			<CurrentYear>$([System.DateTime]::Now.Year)</CurrentYear>
+		</PropertyGroup>
+
+		<!-- Delete the solution cache file (see http://blogs.msdn.com/b/msbuild/archive/2008/02/11/what-s-up-with-xxx-sln-cache.aspx) -->
+		<Delete Files="$(MSBuildProjectDirectory)\SubtitleDownloader.sln.cache" />
+
+		<!-- Overwrite the contents of the GlobalAssemblyInfo file with the correct data -->
+		<AssemblyInfo CodeLanguage="CS" OutputFile="$(MSBuildProjectDirectory)\SubtitleDownloaderPlugin\Properties\AssemblyInfo.cs" CLSCompliant="False" AssemblyCompany="Woodbury Software" AssemblyProduct="Subtitle Downloader" AssemblyCopyright="© 2012-$(CurrentYear)" AssemblyVersion="$(VersionNumber)" AssemblyFileVersion="$(VersionNumber)" />
+		<AssemblyInfo CodeLanguage="CS" OutputFile="$(MSBuildProjectDirectory)\SubtitleDownloaderPlugin.Engine\Properties\AssemblyInfo.cs" CLSCompliant="False" AssemblyCompany="Woodbury Software" AssemblyProduct="Subtitle Downloader" AssemblyCopyright="© 2012-$(CurrentYear)" AssemblyVersion="$(VersionNumber)" AssemblyFileVersion="$(VersionNumber)" />
+		<AssemblyInfo CodeLanguage="CS" OutputFile="$(MSBuildProjectDirectory)\WoodburySoftware.Utillities\Properties\AssemblyInfo.cs" CLSCompliant="False" AssemblyCompany="Woodbury Software" AssemblyProduct="Subtitle Downloader" AssemblyCopyright="© 2012-$(CurrentYear)" AssemblyVersion="$(VersionNumber)" AssemblyFileVersion="$(VersionNumber)" />
+
+		<!-- Build the solution -->
+		<Exec Command="$(MSBuildBinPath)\msbuild.exe SubtitleDownloader.sln /p:SolutionDir=$(MSBuildProjectDirectory) /property:Configuration=$(Option_BuildConfiguration) /t:Rebuild"/>
+	</Target>
+  
+	<!--########################################################################################
+		Generate the version number for this build
+	#########################################################################################-->
+	<Target Name="GetVersionNumber">
+
+		<!-- Read the base version number from the XML file -->
+		<XmlRead XPath="/Version" XmlFileName="$(MSBuildProjectDirectory)\VCS Roots\Version\Version.xml">
+			<Output TaskParameter="Value" PropertyName="VersionNumber" />
+		</XmlRead>		 
+	</Target>
+</Project>

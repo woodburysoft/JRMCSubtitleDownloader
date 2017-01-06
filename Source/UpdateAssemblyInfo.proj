@@ -1,0 +1,20 @@
+<Project ToolsVersion="4.0" DefaultTargets="UpdateAssemblyInfo" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	
+	<Import Project="$(MSBuildProjectDirectory)\VCS Roots\MSBuild Community Tasks\MSBuild.Community.Tasks.Targets"/>	
+			
+	<Target Name="UpdateAssemblyInfo">
+		<PropertyGroup>
+			<CurrentYear>$([System.DateTime]::Now.Year)</CurrentYear>
+		</PropertyGroup>
+		
+		<!-- Read the base version number from the XML file -->
+		<XmlRead XPath="/Version" XmlFileName="$(MSBuildProjectDirectory)\VCS Roots\Version\Version.xml">
+			<Output TaskParameter="Value" PropertyName="VersionNumber" />
+		</XmlRead>		 
+
+		<!-- Overwrite the contents of the GlobalAssemblyInfo file with the correct data -->
+		<AssemblyInfo CodeLanguage="CS" OutputFile="$(MSBuildProjectDirectory)\SubtitleDownloaderPlugin\Properties\AssemblyInfo.cs" CLSCompliant="False" AssemblyCompany="Woodbury Software" AssemblyProduct="Subtitle Downloader" AssemblyCopyright="© 2012-$(CurrentYear)" AssemblyVersion="$(VersionNumber)" AssemblyFileVersion="$(VersionNumber)" />
+		<AssemblyInfo CodeLanguage="CS" OutputFile="$(MSBuildProjectDirectory)\SubtitleDownloaderPlugin.Engine\Properties\AssemblyInfo.cs" CLSCompliant="False" AssemblyCompany="Woodbury Software" AssemblyProduct="Subtitle Downloader" AssemblyCopyright="© 2012-$(CurrentYear)" AssemblyVersion="$(VersionNumber)" AssemblyFileVersion="$(VersionNumber)" />
+		<AssemblyInfo CodeLanguage="CS" OutputFile="$(MSBuildProjectDirectory)\WoodburySoftware.Utillities\Properties\AssemblyInfo.cs" CLSCompliant="False" AssemblyCompany="Woodbury Software" AssemblyProduct="Subtitle Downloader" AssemblyCopyright="© 2012-$(CurrentYear)" AssemblyVersion="$(VersionNumber)" AssemblyFileVersion="$(VersionNumber)" />		
+	</Target>	
+</Project>
