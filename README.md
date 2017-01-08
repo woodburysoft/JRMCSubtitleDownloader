@@ -1,4 +1,8 @@
-# JRMCSubtitleDownloader
+# JRMCSubtitleDownloader #
+
+<a href="http://pahunt.no-ip.org:8081/viewType.html?buildTypeId=buildType:JRMCSubtitleDownloader_BuildPlugIn&guest=1">
+	<img src="http://pahunt.no-ip.org:8081/app/rest/builds/buildType:(id:buildType:JRMCSubtitleDownloader_BuildPlugIn)/statusIcon"/>
+</a>
 
 This is a plug-in for JRiver Media Center will attempt to download subtitles for a movie or a TV show as soon as playback begins. I wrote this purely for myself to begin with primarily because I got bored of manually downloading subtitles, naming the file correctly and putting it in the correct folder but I realised other people might find this useful too. Here are some important disclaimers:
 
