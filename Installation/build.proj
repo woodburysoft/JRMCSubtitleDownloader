@@ -15,7 +15,7 @@
 	<Target Name="GetVersionNumber">
 
 		<!-- Read the base version number from the XML file -->
-		<XmlRead XPath="/Version" XmlFileName="$(MSBuildProjectDirectory)\Version.xml">
+		<XmlRead XPath="/Version" XmlFileName="$(MSBuildProjectDirectory)\..\Version\Version.xml">
 			<Output TaskParameter="Value" PropertyName="VersionNumber" />
 		</XmlRead>		 
 	</Target>
