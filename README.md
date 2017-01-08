@@ -1,4 +1,4 @@
-# JRMCSubtitleDownloader #
+# JRMC Subtitle Downloader #
 
 <a href="http://pahunt.no-ip.org:8081/viewType.html?buildTypeId=JRMCSubtitleDownloader_BuildPlugIn&guest=1">
 	<img src="http://pahunt.no-ip.org:8081/app/rest/builds/buildType:(id:JRMCSubtitleDownloader_BuildPlugIn)/statusIcon"/>
