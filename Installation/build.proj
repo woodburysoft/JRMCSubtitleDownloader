@@ -1,6 +1,6 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	
-	<Import Project="$(MSBuildProjectDirectory)..\Build Process\MSBuild Community Tasks\MSBuild.Community.Tasks.Targets"/>
+	<Import Project="$(MSBuildProjectDirectory)\..\Build Process\MSBuild Community Tasks\MSBuild.Community.Tasks.Targets"/>
 	
 	<!--########################################################################################
 		Build the installer
